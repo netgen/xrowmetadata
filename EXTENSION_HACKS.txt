@@ -1,0 +1,23 @@
+FIXED ISSUE: TIMEZONE NOT SET CORRECTLY WHEN PASSING TIMESTAMP AS PARAMETER TO DATETIME CONSTRUCTOR
+
+/modules/sitemaps/index.php
+
+line 78 - 80:
+- commented out incorrect DateTime object initialization with timestamp passed as parameter in constructor
+- added correct DateTime object initialization, where timestamp is set after object is initialized
+    //$date->date = new DateTime( "@" . $file->mtime() );
+    $date->date = new DateTime();
+    $date->date->setTimestamp( $file->mtime() );
+
+/classes/structs/xrowsitemapitemmodified.php
+
+line 17 - 19:
+- commented out incorrect DateTime object initialization with timestamp passed as parameter in constructor
+- added correct DateTime object initialization, where timestamp is set after object is initialized
+
+    //$this->date = new DateTime( '@' . $date );
+    $this->date = new DateTime();
+    $this->date->setTimestamp( $date );
+
+
+

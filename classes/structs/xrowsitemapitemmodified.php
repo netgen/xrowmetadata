@@ -2,10 +2,10 @@
 
 class xrowSitemapItemModified extends xrowSitemapItem
 {
-    
+
     public $date; // DateTime,  YYYY-MM-DDThh:mm:ssTZD (e.g., 1997-07-16T19:20:30+01:00)
 
-    
+
     function __construct( $date )
     {
         if ( $date instanceof DateTime )
@@ -14,7 +14,9 @@ class xrowSitemapItemModified extends xrowSitemapItem
         }
         elseif ( is_numeric( $date ) )
         {
-            $this->date = new DateTime( '@' . $date );
+            //$this->date = new DateTime( '@' . $date );
+            $this->date = new DateTime();
+            $this->date->setTimestamp( $date );
         }
     }
 
