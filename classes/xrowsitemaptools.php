@@ -271,7 +271,11 @@ class xrowSitemapTools
         }
         if ( $meta and $meta->change )
         {
-            $extensions[] = new xrowSitemapItemFrequency( $meta->change );
+            if( !$ini->hasVariable( 'SitemapSettings', 'DisableChangeFreqTagInSitemapNodes' ) ||
+                 $ini->variable( 'SitemapSettings', 'DisableChangeFreqTagInSitemapNodes' ) != 'true' )
+            {
+                $extensions[] = new xrowSitemapItemFrequency( $meta->change );
+            }
         }
 
         if ( $meta and $meta->priority !== null )
@@ -434,7 +438,7 @@ class xrowSitemapTools
         {
             $params['AttributeFilter'] = array( array( 'published', '>', $timestamp ) );
         }
-		
+
 		if( $xrowsitemapINI->hasVariable( 'SitemapSettings', 'MainNodeOnly' ) && $xrowsitemapINI->Variable( 'SitemapSettings', 'MainNodeOnly' ) == "true" )
         {
             $params['MainNodeOnly'] = true;

@@ -94,6 +94,9 @@ MobileMaxWidth=640
 # only use this if you have remove siteaccess enabled
 # MobileDomainName=m.example.com
 
+#Show/hide <changefreq> tag in sitemap nodes
+#DisableChangeFreqTagInSitemapNodes=true
+
 [MobileSitemapSettings]
 # here you need to specify every siteaccess a sitemap shall be created for
 # if no siteaccessarray is given, the default siteaccess will be used for generation

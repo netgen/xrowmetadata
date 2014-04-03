@@ -19,5 +19,13 @@ line 17 - 19:
     $this->date = new DateTime();
     $this->date->setTimestamp( $date );
 
+/classes/xrowsitemaptools.php
+
+line 274-278:
+- if 'DisableChangeFreqTagInSitemapNodes' setting does not exist in xrowsitemap.ini or its value is not set to 'true', add <changefreq> tag in sitemap node elements
+
+
+
+
 
 
