@@ -21,7 +21,7 @@ line 17 - 19:
 
 /classes/xrowsitemaptools.php
 
-line 274-278:
+line 312-316:
 - if 'DisableChangeFreqTagInSitemapNodes' setting does not exist in xrowsitemap.ini or its value is not set to 'true', add <changefreq> tag in sitemap node elements
 
 

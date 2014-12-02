@@ -86,15 +86,15 @@ class xrowSitemapList
      */
     function save( $filename = 'sitemap.xml' )
     {
-        global $cli, $isQuiet;
         $file = eZClusterFileHandler::instance( $filename );
         if ( $file->exists() )
         {
             eZDebug::writeDebug( "Time: " . date( 'd.m.Y H:i:s' ) . ". Action: " . $filename . " exists. File will be remove." );
             if ( ! $isQuiet )
-            {
-                $cli->output( "\n" );
+            { 
+                $cli = eZCLI::instance();
                 $cli->output( "Time: " . date( 'd.m.Y H:i:s' ) . ". Action: " . $filename . " exists. File will be remove." );
+                $cli->output( "\n" );
             }
             $file->delete();
         }
