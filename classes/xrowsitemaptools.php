@@ -276,7 +276,7 @@ class xrowSitemapTools
 
         $transformURIMode = eZURI::getTransformURIMode();
         // force URL to be generated in 'full mode' if MatchOrder != uri
-        if( $site_ini->variable( 'SiteAccessSettings', 'MatchOrder' ) != 'uri' )
+        if( !in_array( $site_ini->variable( 'SiteAccessSettings', 'MatchOrder' ), array( 'uri', 'host_uri' ) ) )
         {
             $transformURIMode = 'full';
         }
@@ -292,6 +292,42 @@ class xrowSitemapTools
             else
             {
                 $url = 'http://' . self::domain() . '/' . $GLOBALS['eZCurrentAccess']['name'] . $url;
+            }
+        }
+
+        if( $site_ini->variable( 'SiteAccessSettings', 'MatchOrder' ) == 'host_uri' )
+        {
+            if ( $ini->hasVariable( 'SitemapSettings', 'HostUriMatchMapItems' ) )
+            {
+                foreach ( $ini->variable( 'SitemapSettings', 'HostUriMatchMapItems' ) as $siteAccessName => $hostUriMap )
+                {
+                    if( $siteAccessName == $GLOBALS['eZCurrentAccess']['name'] )
+                    {
+                        $hostUri = explode( ';', $hostUriMap );
+                        if( count( $hostUri ) < 2 )
+                        {
+                            $hostUri[] = '';
+                        }
+                        break;
+                    }
+                }
+            }
+
+            if( !empty( $hostUri ) )
+            {
+                if ( ( $site_ini->hasVariable('SiteSettings', 'DefaultAccess') && $site_ini->variable('SiteSettings', 'DefaultAccess') == $GLOBALS['eZCurrentAccess']['name'] && $site_ini->variable( 'SiteAccessSettings', 'RemoveSiteAccessIfDefaultAccess' ) == 'enabled' )
+                     or $ini->variable( 'Settings', 'HideSiteaccessAlways' ) == 'true' )
+                {
+                    $url = 'http://' . $hostUri[0] . $url;
+                }
+                else
+                {
+                    $url = 'http://' . $hostUri[0] . '/' . $hostUri[1] . $url;
+                }
+            }
+            else
+            {
+                $url = 'http://' . self::domain() . $url;
             }
         }
 

@@ -37,9 +37,12 @@ MobileSitemap=disabled
 # AvailableSiteAccessList[]
 # AvailableSiteAccessList[]=ger
 # AvailableSiteAccessList[]=eng
+
+# if using HostUri siteaccess matching, you need to specify domain and URI for which the sitemap will be generated
+# you can specify one domain and uri pair per siteaccess
 #HostUriMatchMapItems[]
-#HostUriMatchMapItems[]=www.xxxxxxxx.de;x_de
-#HostUriMatchMapItems[]=www.xxxxxxxx.de;xx_de
+#HostUriMatchMapItems[ger]=www.xxxxxxxx.de;x_de
+#HostUriMatchMapItems[eng]=www.xxxxxxxx.de;xx_eng
 MainNodeOnly=false
 
 # include or exclude objects of classes listed in ClassFilterArray
