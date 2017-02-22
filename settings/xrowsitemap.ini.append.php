@@ -32,7 +32,7 @@ AlwaysAdd=enabled
 MobileSitemap=disabled
 
 # If set to true, URLs in sitemaps will be generated with https protocol instead of http
-Https=true
+Https=false
 
 [SitemapSettings]
 # here you need to specify every siteaccess a sitemap shall be created for
