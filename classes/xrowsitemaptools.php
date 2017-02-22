@@ -68,6 +68,12 @@ class xrowSitemapTools
             $hostname = self::domain();
         }
         $ini = eZINI::instance( 'xrowsitemap.ini' );
+
+        if( $ini->hasVariable('Settings', 'Https') && $ini->variable('Settings', 'Https') == true )
+        {
+            self::$protocol = 'https';
+        }
+
         // send a ping to google?
         if ( ( $ini->hasVariable( 'Settings', 'Ping' ) and $ini->variable( 'Settings', 'Ping' ) == 'true' ) or ! $ini->hasVariable( 'Settings', 'Ping' ) )
         {
