@@ -78,7 +78,18 @@ function addFiles( &$index, $dirname, $dirArray )
                 //$date->date = new DateTime( "@" . $file->mtime() );
                 $date->date = new DateTime();
                 $date->date->setTimestamp( $file->mtime() );
-                $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https" : "http";
+
+                $protocol = 'http';
+                if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443)
+                {
+                    $protocol = 'https';
+                }
+                elseif (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https' ||
+                        !empty($_SERVER['HTTP_X_FORWARDED_SSL']) && $_SERVER['HTTP_X_FORWARDED_SSL'] == 'on')
+                {
+                    $protocol = 'https';
+                }
+
                 $loc = $protocol . '://' . $_SERVER['HTTP_HOST'] . '/' . $file->name();
                 if ( !in_array( $loc, $GLOBALS['loc'] ) )
                 {
