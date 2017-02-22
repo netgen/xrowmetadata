@@ -102,12 +102,12 @@ class xrowSitemapConverter implements xrowSitemapImageConverterInterface, xrowSi
                         if ( $ini->hasVariable( 'SitemapSettings', 'ImageAlias' ) )
                         {
                             $aliasdata = $imagedata->attribute( $ini->variable( 'SitemapSettings', 'ImageAlias' ) );
-                            $video->thumbnail_loc = 'http://' . xrowSitemapTools::domain() . '/' . $aliasdata['url'];
+                            $video->thumbnail_loc = xrowSitemapTools::$protocol . '//' . xrowSitemapTools::domain() . '/' . $aliasdata['url'];
                         }
                         else
                         {
                             $aliasdata = $imagedata->attribute( 'original' );
-                            $video->thumbnail_loc = 'http://' . xrowSitemapTools::domain() . '/' . $aliasdata['url'];
+                            $video->thumbnail_loc = xrowSitemapTools::$protocol . '://' . xrowSitemapTools::domain() . '/' . $aliasdata['url'];
                         }
                     }
                     break;
@@ -116,7 +116,7 @@ class xrowSitemapConverter implements xrowSitemapImageConverterInterface, xrowSi
                     {
                         $content = $attribute->content();
                         $uri = "content/download/" . $attribute->attribute( 'contentobject_id' ) . '/' . $content->attribute( 'contentobject_attribute_id' ) . '/' . $content->attribute( 'original_filename' );
-                        $video->content_loc = 'http://' . xrowSitemapTools::domain() . '/' . $uri;
+                        $video->content_loc = xrowSitemapTools::$protocol . '://' . xrowSitemapTools::domain() . '/' . $uri;
                     }
                     break;
                 case 'xrowvideo':
@@ -124,7 +124,7 @@ class xrowSitemapConverter implements xrowSitemapImageConverterInterface, xrowSi
                     {
                         $content = $attribute->content();
                         $uri = "content/download/" . $content["media"]->attribute->ContentObjectID . '/' . $content["media"]->attribute->ID . '/' . $content["binary"]->OriginalFilename ;
-                        $video->content_loc = 'http://' . xrowSitemapTools::domain() . '/' . $uri;
+                        $video->content_loc = xrowSitemapTools::$protocol . '://' . xrowSitemapTools::domain() . '/' . $uri;
                         $video->duration = $content["video"]["duration"];
                     }
                     break;
@@ -166,12 +166,12 @@ class xrowSitemapConverter implements xrowSitemapImageConverterInterface, xrowSi
                         if ( $ini->hasVariable( 'SitemapSettings', 'ImageAlias' ) )
                         {
                             $aliasdata = $imagedata->attribute( $ini->variable( 'SitemapSettings', 'ImageAlias' ) );
-                            $image->url = 'http://' . xrowSitemapTools::domain() . '/' . $aliasdata['url'];
+                            $image->url = xrowSitemapTools::$protocol . '://' . xrowSitemapTools::domain() . '/' . $aliasdata['url'];
                         }
                         else
                         {
                             $aliasdata = $imagedata->attribute( 'original' );
-                            $image->url = 'http://' . xrowSitemapTools::domain() . '/' . $aliasdata['url'];
+                            $image->url = xrowSitemapTools::$protocol . '://' . xrowSitemapTools::domain() . '/' . $aliasdata['url'];
                         }
                         if ( $imagedata->attribute( 'alternative_text' ) )
                         {
