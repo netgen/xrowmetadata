@@ -17,7 +17,14 @@ else
 {
     $content = '';
 }
-$content .= "\nSitemap: http://" . $_SERVER['HTTP_HOST'] . "/sitemaps/index";
+
+$protocol = 'http';
+if( $xrowsitemapINI->hasVariable('Settings', 'Https') && $xrowsitemapINI->variable('Settings', 'Https') == 'true' )
+{
+    $protocol = 'https';
+}
+
+$content .= "\nSitemap: " . $protocol . "://" . $_SERVER['HTTP_HOST'] . "/sitemaps/index";
 // Set header settings
 header( 'Content-Type: text/plain; charset=UTF-8' );
 header( 'Content-Length: ' . strlen( $content ) );

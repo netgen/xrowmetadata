@@ -80,12 +80,7 @@ function addFiles( &$index, $dirname, $dirArray )
                 $date->date->setTimestamp( $file->mtime() );
 
                 $protocol = 'http';
-                if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443)
-                {
-                    $protocol = 'https';
-                }
-                elseif (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https' ||
-                        !empty($_SERVER['HTTP_X_FORWARDED_SSL']) && $_SERVER['HTTP_X_FORWARDED_SSL'] == 'on')
+                if( $xrowsitemapINI->hasVariable('Settings', 'Https') && $xrowsitemapINI->variable('Settings', 'Https') == 'true' )
                 {
                     $protocol = 'https';
                 }
