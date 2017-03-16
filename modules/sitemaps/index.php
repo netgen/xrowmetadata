@@ -76,15 +76,7 @@ function addFiles( &$index, $dirname, $dirArray )
             {
                 $date = new xrowSitemapItemModified($file->mtime());
 
-                $protocol = 'http';
-
-                $xrowsitemapINI = eZINI::instance( 'xrowsitemap.ini' );
-                if( $xrowsitemapINI->hasVariable('Settings', 'Https') && $xrowsitemapINI->variable('Settings', 'Https') == 'true' )
-                {
-                    $protocol = 'https';
-                }
-
-                $loc = $protocol . '://' . $_SERVER['HTTP_HOST'] . '/' . $file->name();
+                $loc = xrowSitemapTools::getProtocol() . '://' . $_SERVER['HTTP_HOST'] . '/' . $file->name();
                 if ( !in_array( $loc, $GLOBALS['loc'] ) )
                 {
                     $GLOBALS['loc'][] = $loc;
