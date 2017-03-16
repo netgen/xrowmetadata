@@ -74,11 +74,9 @@ function addFiles( &$index, $dirname, $dirArray )
             }
             if ( $file->size() > 50 )
             {
-                $date = new xrowSitemapItemModified();
-                //$date->date = new DateTime( "@" . $file->mtime() );
-                $date->date = new DateTime();
-                $date->date->setTimestamp( $file->mtime() );
-                $loc = 'http://' . $_SERVER['HTTP_HOST'] . '/' . $file->name();
+                $date = new xrowSitemapItemModified($file->mtime());
+
+                $loc = xrowSitemapTools::getProtocol() . '://' . $_SERVER['HTTP_HOST'] . '/' . $file->name();
                 if ( !in_array( $loc, $GLOBALS['loc'] ) )
                 {
                     $GLOBALS['loc'][] = $loc;

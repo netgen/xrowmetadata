@@ -17,7 +17,8 @@ else
 {
     $content = '';
 }
-$content .= "\nSitemap: http://" . $_SERVER['HTTP_HOST'] . "/sitemaps/index";
+
+$content .= "\nSitemap: " . xrowSitemapTools::getProtocol() . "://" . $_SERVER['HTTP_HOST'] . "/sitemaps/index";
 // Set header settings
 header( 'Content-Type: text/plain; charset=UTF-8' );
 header( 'Content-Length: ' . strlen( $content ) );
