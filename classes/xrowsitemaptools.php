@@ -32,7 +32,7 @@ class xrowSitemapTools
         $ini = eZINI::instance( 'site.ini' );
         $sitemapIni = eZINI::instance('xrowsitemap.ini');
 
-        if( $sitemapIni->hasVariable('Settings', 'Https') && $sitemapIni->variable('Settings', 'Https') == true )
+        if( $sitemapIni->hasVariable('Settings', 'Https') && $sitemapIni->variable('Settings', 'Https') == 'true' )
         {
             self::$protocol = 'https';
         }
@@ -69,7 +69,7 @@ class xrowSitemapTools
         }
         $ini = eZINI::instance( 'xrowsitemap.ini' );
 
-        if( $ini->hasVariable('Settings', 'Https') && $ini->variable('Settings', 'Https') == true )
+        if( $ini->hasVariable('Settings', 'Https') && $ini->variable('Settings', 'Https') == 'true' )
         {
             self::$protocol = 'https';
         }
