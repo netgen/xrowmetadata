@@ -16,7 +16,22 @@ class xrowSitemapTools
 
     public static $excludes = null;
 
-    public static $protocol = 'http';
+    private static $protocol = null;
+
+    public static function getProtocol()
+    {
+        if( empty(self::$protocol) )
+        {
+            self::$protocol = 'http';
+
+            $sitemapIni = eZINI::instance('xrowsitemap.ini');
+            if( $sitemapIni->hasVariable('Settings', 'Https') && $sitemapIni->variable('Settings', 'Https') == 'true' )
+            {
+                self::$protocol = 'https';
+            }
+        }
+        return self::$protocol;
+    }
 
     public static function changeAccess( array $access )
     {
@@ -30,12 +45,6 @@ class xrowSitemapTools
     {
         $old_access = $GLOBALS['eZCurrentAccess'];
         $ini = eZINI::instance( 'site.ini' );
-        $sitemapIni = eZINI::instance('xrowsitemap.ini');
-
-        if( $sitemapIni->hasVariable('Settings', 'Https') && $sitemapIni->variable('Settings', 'Https') == 'true' )
-        {
-            self::$protocol = 'https';
-        }
 
         foreach ( $siteaccesses as $siteaccess )
         {
@@ -69,17 +78,12 @@ class xrowSitemapTools
         }
         $ini = eZINI::instance( 'xrowsitemap.ini' );
 
-        if( $ini->hasVariable('Settings', 'Https') && $ini->variable('Settings', 'Https') == 'true' )
-        {
-            self::$protocol = 'https';
-        }
-
         // send a ping to google?
         if ( ( $ini->hasVariable( 'Settings', 'Ping' ) and $ini->variable( 'Settings', 'Ping' ) == 'true' ) or ! $ini->hasVariable( 'Settings', 'Ping' ) )
         {
             $uri = '/sitemaps/index';
             eZURI::transformURI( $uri );
-            $link = self::$protocol . '://' . $hostname . $uri;
+            $link = self::getProtocol() . '://' . $hostname . $uri;
             // google
             $url = "http://www.google.com/webmasters/tools/ping?sitemap=" . $link;
             file_get_contents( $url );
@@ -278,13 +282,13 @@ class xrowSitemapTools
             $ini->hasVariable( 'SitemapSettings', 'MobileSiteAccessName' ) != '' )
             {
                 $mobileSiteAccess = $ini->variable( 'SitemapSettings', 'MobileSiteAccessName' );
-                $mobileURL = self::$protocol . '://' . self::domain() . '/' . $mobileSiteAccess . $urlAlias;
+                $mobileURL = self::getProtocol() . '://' . self::domain() . '/' . $mobileSiteAccess . $urlAlias;
             }
             if ( $ini->hasVariable( 'SitemapSettings', 'MobileDomainName' ) &&
             $ini->hasVariable( 'SitemapSettings', 'MobileDomainName' ) != '' )
             {
                 $mobileDomain = $ini->variable( 'SitemapSettings', 'MobileDomainName' );
-                $mobileURL = self::$protocol . '://' . $mobileDomain . $urlAlias;
+                $mobileURL = self::getProtocol() . '://' . $mobileDomain . $urlAlias;
             }
             $extensions[] = new xrowSitemapItemAlternateLink( $mobileURL );
         }
@@ -302,11 +306,11 @@ class xrowSitemapTools
         {
             if ( $site_ini->variable( 'SiteAccessSettings', 'RemoveSiteAccessIfDefaultAccess' ) == 'enabled' or $ini->variable( 'Settings', 'HideSiteaccessAlways' ) == 'true' )
             {
-                $url = self::$protocol . '://' . self::domain() . $url;
+                $url = self::getProtocol() . '://' . self::domain() . $url;
             }
             else
             {
-                $url = self::$protocol . '://' . self::domain() . '/' . $GLOBALS['eZCurrentAccess']['name'] . $url;
+                $url = self::getProtocol() . '://' . self::domain() . '/' . $GLOBALS['eZCurrentAccess']['name'] . $url;
             }
         }
 
@@ -333,16 +337,16 @@ class xrowSitemapTools
                 if ( ( $site_ini->hasVariable('SiteSettings', 'DefaultAccess') && $site_ini->variable('SiteSettings', 'DefaultAccess') == $GLOBALS['eZCurrentAccess']['name'] && $site_ini->variable( 'SiteAccessSettings', 'RemoveSiteAccessIfDefaultAccess' ) == 'enabled' )
                      or $ini->variable( 'Settings', 'HideSiteaccessAlways' ) == 'true' )
                 {
-                    $url = self::$protocol . '://' . $hostUri[0] . $url;
+                    $url = self::getProtocol() . '://' . $hostUri[0] . $url;
                 }
                 else
                 {
-                    $url = self::$protocol . '://' . $hostUri[0] . '/' . $hostUri[1] . $url;
+                    $url = self::getProtocol() . '://' . $hostUri[0] . '/' . $hostUri[1] . $url;
                 }
             }
             else
             {
-                $url = self::$protocol . '://' . self::domain() . $url;
+                $url = self::getProtocol() . '://' . self::domain() . $url;
             }
         }
 
@@ -900,7 +904,7 @@ class xrowSitemapTools
 
                     $url = $node->attribute( 'url_alias' );
                     eZURI::transformURI( $url, true );
-                    $url = self::$protocol . '://' . self::domain() . $url;
+                    $url = self::getProtocol() . '://' . self::domain() . $url;
                     $sitemap->add( $url, $extensions );
 
                     if ( isset( $bar ) )
@@ -1023,7 +1027,7 @@ class xrowSitemapTools
         }
 
 
-        $url = self::$protocol . '://' . $mobileDomain . $url;
+        $url = self::getProtocol() . '://' . $mobileDomain . $url;
 
         if ( $meta and $meta->sitemap_use != '0' )
         {
@@ -1061,7 +1065,7 @@ class xrowSitemapTools
 
                 $url = $subTreeNode->attribute( 'url_alias' );
                 eZURI::transformURI( $url );
-                $url = self::$protocol . '://' . $mobileDomain . $url;
+                $url = self::getProtocol() . '://' . $mobileDomain . $url;
 
                 if ( $meta and $meta->sitemap_use != '0' )
                 {
