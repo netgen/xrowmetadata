@@ -80,6 +80,8 @@ function addFiles( &$index, $dirname, $dirArray )
                 $date->date->setTimestamp( $file->mtime() );
 
                 $protocol = 'http';
+
+                $xrowsitemapINI = eZINI::instance( 'xrowsitemap.ini' );
                 if( $xrowsitemapINI->hasVariable('Settings', 'Https') && $xrowsitemapINI->variable('Settings', 'Https') == 'true' )
                 {
                     $protocol = 'https';
