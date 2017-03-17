@@ -301,6 +301,12 @@ class xrowSitemapTools
         }
         eZURI::transformURI( $url, true, $transformURIMode );
 
+	/** if full mode URI transformation was performed, replace the protocol with the one defined by configuration */
+        if($transformURIMode == 'full')
+        {
+            $url = preg_replace("(^https?)", self::getProtocol(), $url );
+        }
+
         // only the URI mode is fully compatible with this $url generation
         if( $site_ini->variable( 'SiteAccessSettings', 'MatchOrder' ) == 'uri' )
         {
