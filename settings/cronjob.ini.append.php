@@ -17,8 +17,6 @@ Scripts[]
 Scripts[]=mobilesitemap.php
 
 [CronjobSettings]
-Scripts[]=sitemap.php
-Scripts[]=newssitemap.php
 ExtensionDirectories[]=xrowmetadata
 
 */?>
