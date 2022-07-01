@@ -59,7 +59,7 @@ class xrowMetaDataType extends eZDataType
                     return eZInputValidator::STATE_INVALID;
                 }
             }
-            if ( count( $data['description'] ) > 160 )
+            if ( mb_strlen( $data['description'] ) > 160 )
             {
                     $contentObjectAttribute->setValidationError( ezpI18n::tr( 'kernel/classes/datatypes', 'Description should be shorter as 155 characters.' ) );
                     return eZInputValidator::STATE_INVALID;
